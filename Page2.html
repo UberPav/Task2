@@ -380,17 +380,15 @@
         ExtendedProject.prototype = Object.create(PortfolioItem.prototype);
         ExtendedProject.prototype.constructor = ExtendedProject;
 
-       
+
         ExtendedProject.prototype.getProjectLink = function() {
         return this.link;
         };
         ExtendedProject.prototype.renderLinkBadge = function() {
         return `<a href="${this.link}" target="_blank" style="text-decoration:none; font-size:0.7rem; background:#e2e9ef; border-radius:30px; padding:0.2rem 0.8rem; display:inline-block; margin-top:6px;">🔗 prototype extended → demo</a>`;
         };
-       
         ExtendedProject.prototype.renderCard = function(itemId, currentSlideIdx) {
         const baseCard = PortfolioItem.prototype.renderCard.call(this, itemId, currentSlideIdx);
-       
         const linkHtml = `<div style="margin-top: 8px;">${this.renderLinkBadge()}</div>`;
         return baseCard.replace('</div></div>', `${linkHtml}</div></div>`);
         };
