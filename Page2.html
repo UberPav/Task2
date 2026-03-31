@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>NovaForge | Interactive Portfolio & Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f6f9fc 0%, #eef2f5 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #1a2c3e;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+        }
+
+        
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            border-radius: 2rem;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(2px);
+            margin-bottom: 3rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+        }
+
+            .hero h1 {
+                font-size: 3.2rem;
+                font-weight: 700;
+                background: linear-gradient(135deg, #1e4b6e, #2b7a62);
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+                letter-spacing: -0.01em;
+            }
+
+            .hero .tagline {
+                font-size: 1.2rem;
+                color: #3a5b6e;
+                margin-top: 0.75rem;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+        
+        .section-title {
+            font-size: 1.9rem;
+            font-weight: 600;
+            border-left: 6px solid #2b7a62;
+            padding-left: 1rem;
+            margin: 2.5rem 0 1.5rem 0;
+        }
+
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            backdrop-filter: blur(0px);
+            cursor: pointer;
+        }
+
+            .card:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
+            }
+
+        
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: #eef2f0;
+            overflow: hidden;
+        }
+
+        .slider-images {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+            .slide-img.active {
+                opacity: 1;
+            }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            font-size: 1.4rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            z-index: 10;
+        }
+
+            .slider-btn:hover {
+                background: rgba(0,0,0,0.8);
+            }
+
+        .prev-btn {
+            left: 12px;
+        }
+
+        .next-btn {
+            right: 12px;
+        }
+
+        .card-content {
+            padding: 1.3rem 1.2rem 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .card-desc {
+            color: #4a6272;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            background: #e2e9ef;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #1f4e6e;
+        }
+
+        
+        .info-panel {
+            background: #e6f0ec;
+            border-radius: 1.5rem;
+            padding: 1rem 1.6rem;
+            margin: 2rem 0 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .info-text {
+            font-weight: 500;
+            color: #1d5b4b;
+        }
+
+        .toggle-btn {
+            background: #2b7a62;
+            border: none;
+            color: white;
+            padding: 0.5rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 0.85rem;
+        }
+
+            .toggle-btn:hover {
+                background: #1e5e4b;
+            }
+
+        
+        .live-update-area {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-top: 2rem;
+            border: 1px solid #dce6e6;
+        }
+
+        .update-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+            .update-controls input {
+                padding: 0.7rem 1rem;
+                border-radius: 60px;
+                border: 1px solid #cbdcdc;
+                flex: 1;
+                font-size: 0.9rem;
+            }
+
+            .update-controls button {
+                background: #2c6e5c;
+                border: none;
+                color: white;
+                padding: 0.6rem 1.3rem;
+                border-radius: 40px;
+                font-weight: 500;
+                cursor: pointer;
+            }
+
+        .dynamic-message {
+            background: #eef3f0;
+            padding: 1rem;
+            border-radius: 1rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #cde0db;
+            color: #5e7e8c;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Pavo's Studio</h1>
+            <p class="tagline">Interactive prototype showcase</p>
+        </div>
+
+        
+        <div class="section-title"> Featured projects</div>
+        <div id="projectsContainer" class="projects-grid"></div>
+
+        <div class="info-panel" id="togglePanel">
+            <span class="info-text" id="toggleMessage">Click the button to reveal hidden stats about prototype inheritance</span>
+            <button class="toggle-btn" id="revealToggleBtn">Toggle insight</button>
+        </div>
+        <div id="extraInsight" style="display: none;" class="live-update-area">
+            <strong> Prototype insight</strong><br>
+            <span id="insightText">All project cards inherit from `ProjectItem` prototype. Methods like `updateDescription` are shared, saving memory & boosting reusability.</span>
+        </div>
+
+        <div class="section-title">Live feed & dynamic updates</div>
+        <div class="live-update-area">
+            <div class="update-controls">
+                <input type="text" id="userMessageInput" placeholder="Type a status update ..." autocomplete="off">
+                <button id="postUpdateBtn"> Post update</button>
+                <button id="clearUpdatesBtn"> Clear all</button>
+            </div>
+            <div id="updateFeed" class="dynamic-message">
+                Welcome! Post a message — it dynamically appears below (they'll dissapear after reloading the page, tho').
+            </div>
+        </div>
+
+        <footer>
+             Task 2 • HTML/CSS • Prototype inheritance 
+        </footer>
+    </div>
+
+    <script>
+       
+        function PortfolioItem(title, description, techStack, imageArray) {
+        this.title = title;
+        this.description = description;
+        this.techStack = techStack;     
+        this.imageArray = imageArray;   
+        this.currentSlideIndex = 0;     
+        }
+
+       
+        PortfolioItem.prototype.getTechBadges = function() {
+        return this.techStack.map(tech => `<span class="tech-badge">${tech}</span>`).join(' ');
+        };
+
+       
+        PortfolioItem.prototype.updateDescription = function(newDesc) {
+        this.description = newDesc;
+        return this.description;
+        };
+
+       
+        PortfolioItem.prototype.renderSliderMarkup = function(itemId, slideIndex) {
+       
+        const sliderId = `slider-${itemId}`;
+        let slidesHtml = '';
+        this.imageArray.forEach((imgUrl, idx) => {
+        const activeClass = (idx === slideIndex) ? 'active' : '';
+        slidesHtml += `<img class="slide-img ${activeClass}" src="${imgUrl}" alt="project visual">`;
+        });
+        return `
+        <div class="slider-container" data-project-id="${itemId}">
+        <div class="slider-images" id="${sliderId}">
+        ${slidesHtml}
+        </div>
+        <button class="slider-btn prev-btn" data-id="${itemId}" data-dir="prev">❮</button>
+        <button class="slider-btn next-btn" data-id="${itemId}" data-dir="next">❯</button>
+        </div>
+        `;
+        };
+
+       
+        PortfolioItem.prototype.renderCard = function(itemId, currentSlideIdx) {
+        return `
+        <div class="card" data-card-id="${itemId}">
+        ${this.renderSliderMarkup(itemId, currentSlideIdx)}
+        <div class="card-content">
+        <div class="card-title">${this.title}</div>
+        <div class="card-desc" id="desc-${itemId}">${this.description}</div>
+        <div class="tech-stack">${this.getTechBadges()}</div>
+        <div style="margin-top: 12px; font-size:0.75rem; color:#3a7b66;"><span> interactive slider</span></div>
+        </div>
+        </div>
+        `;
+        };
+
+       
+       
+        function ExtendedProject(title, description, techStack, imageArray, link) {
+        PortfolioItem.call(this, title, description, techStack, imageArray);
+        this.link = link || '#';
+        this.hasExternal = true;
+        }
+       
+        ExtendedProject.prototype = Object.create(PortfolioItem.prototype);
+        ExtendedProject.prototype.constructor = ExtendedProject;
+
+       
+        ExtendedProject.prototype.getProjectLink = function() {
+        return this.link;
+        };
+        ExtendedProject.prototype.renderLinkBadge = function() {
+        return `<a href="${this.link}" target="_blank" style="text-decoration:none; font-size:0.7rem; background:#e2e9ef; border-radius:30px; padding:0.2rem 0.8rem; display:inline-block; margin-top:6px;">🔗 prototype extended → demo</a>`;
+        };
+       
+        ExtendedProject.prototype.renderCard = function(itemId, currentSlideIdx) {
+        const baseCard = PortfolioItem.prototype.renderCard.call(this, itemId, currentSlideIdx);
+       
+        const linkHtml = `<div style="margin-top: 8px;">${this.renderLinkBadge()}</div>`;
+        return baseCard.replace('</div></div>', `${linkHtml}</div></div>`);
+        };
+
+       
+       const localImages = [
+    'images/project1-1.gif',
+    'images/project1-2.gif',
+    'images/project1-3.gif',
+    'images/project2-1.gif',
+    'images/project2-2.gif',
+    'images/project2-3.gif',
+    'images/project3-1.gif',
+    'images/project3-2.png',
+    'images/project3-3.gif',
+    'images/project4-1.png',
+    'images/project4-2.jpg',
+    'images/project4-3.png'
+  ];
+
+         const projectsData = [
+    new PortfolioItem(
+      "Frogge AI",
+      "Intelligent frog image recognition & realtime frog detection using edge models.",
+      ["Real"],
+      [localImages[0], localImages[1], localImages[2]]
+    ),
+    new ExtendedProject(
+      "Celestial Frog Kit",
+      "Cathered Frog images usable for profile pictures.",
+      ["Pfp"],
+      [localImages[3], localImages[4], localImages[5]],
+    ),
+    new PortfolioItem(
+      "Frog Dash",
+      "Frog images dashboard.",
+      [".jpg"],
+      [localImages[6], localImages[7], localImages[8]]
+    ),
+    new ExtendedProject(
+      "FrogFolder Explorer",
+      "An explorer for my personal Frog Folder, yup.",
+        ["frog.jpg", "frog.gif", "frog.png"],
+      [localImages[9], localImages[10], localImages[11]],
+    )
+  ];
+
+
+        let currentSlides = projectsData.map((_, idx) => 0);
+
+        const projectsContainer = document.getElementById('projectsContainer');
+
+        function renderAllProjects() {
+        if (!projectsContainer) return;
+        projectsContainer.innerHTML = '';
+        projectsData.forEach((project, idx) => {
+        const currentSlideIdx = currentSlides[idx];
+        const cardHtml = project.renderCard(idx, currentSlideIdx);
+        projectsContainer.insertAdjacentHTML('beforeend', cardHtml);
+        });
+        attachSliderEvents();
+        }
+
+        function attachSliderEvents() {
+        document.querySelectorAll('.slider-btn').forEach(btn => {
+        btn.removeEventListener('click', sliderClickHandler);
+        btn.addEventListener('click', sliderClickHandler);
+        });
+        }
+
+        function sliderClickHandler(e) {
+        e.stopPropagation();
+        const btn = e.currentTarget;
+        const projectId = parseInt(btn.getAttribute('data-id'));
+        const direction = btn.getAttribute('data-dir');
+        if (isNaN(projectId)) return;
+        let currentIdx = currentSlides[projectId];
+        const totalImages = projectsData[projectId].imageArray.length;
+        if (direction === 'prev') {
+        currentIdx = (currentIdx - 1 + totalImages) % totalImages;
+        } else if (direction === 'next') {
+        currentIdx = (currentIdx + 1) % totalImages;
+        }
+        currentSlides[projectId] = currentIdx;
+        const sliderContainer = document.querySelector(`.slider-container[data-project-id="${projectId}"]`);
+        if (sliderContainer) {
+        const images = sliderContainer.querySelectorAll('.slide-img');
+        images.forEach((img, i) => {
+        if (i === currentIdx) {
+        img.classList.add('active');
+        } else {
+        img.classList.remove('active');
+        }
+        });
+        }
+        }
+
+        const toggleBtn = document.getElementById('revealToggleBtn');
+        const extraInsightDiv = document.getElementById('extraInsight');
+        const toggleMessageSpan = document.getElementById('toggleMessage');
+        let insightVisible = false;
+
+        if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+        insightVisible = !insightVisible;
+        if (insightVisible) {
+        extraInsightDiv.style.display = 'block';
+        toggleMessageSpan.innerHTML = 'Every project inherits methods + you can modify shared behavior.';
+        const panel = document.getElementById('togglePanel');
+        if (panel) panel.style.background = '#d9eae3';
+        } else {
+        extraInsightDiv.style.display = 'none';
+        toggleMessageSpan.innerHTML = ' Click the button to reveal hidden stats about prototype inheritance';
+        const panel = document.getElementById('togglePanel');
+        if (panel) panel.style.background = '#e6f0ec';
+        }
+        });
+        }
+
+        
+        const updateFeedDiv = document.getElementById('updateFeed');
+        const userInput = document.getElementById('userMessageInput');
+        const postBtn = document.getElementById('postUpdateBtn');
+        const clearBtn = document.getElementById('clearUpdatesBtn');
+
+        
+        let feedMessages = ["Post a message — it dynamically appears below. (it will dissapear after page reload tho)"];
+
+        function renderFeed() {
+        if (!updateFeedDiv) return;
+        if (feedMessages.length === 0) {
+        updateFeedDiv.innerHTML = '<span style="color:#8aa0aa;">No updates yet. Type something</span>';
+        return;
+        }
+        const feedHtml = feedMessages.map((msg, idx) => `<div style="border-bottom:1px solid #cce0d8; padding:0.5rem 0;"> ${escapeHtml(msg)}</div>`).join('');
+        updateFeedDiv.innerHTML = feedHtml;
+        }
+
+        
+        function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+        });
+        }
+
+        function addUpdate(message) {
+        if (!message.trim()) return;
+        const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute:'2-digit' });
+        const formatted = `[${timestamp}] ${message.trim()}`;
+        feedMessages.unshift(formatted);
+        if (feedMessages.length > 8) feedMessages.pop();
+        renderFeed();
+
+        
+        
+        if (projectsData.length > 0) {
+        const randomIndex = Math.floor(Math.random() * projectsData.length);
+        const targetProject = projectsData[randomIndex];
+        const originalDesc = targetProject.description;
+        const newDescSuffix = ` [updated via feed: "${message.slice(0, 25)}"]`;
+        
+        if (originalDesc.length < 70) {
+        targetProject.updateDescription(originalDesc + newDescSuffix);
+        } else {
+        targetProject.updateDescription(originalDesc.slice(0, 55) + " ... " + newDescSuffix);
+        }
+        
+        const descElement = document.getElementById(`desc-${randomIndex}`);
+        if (descElement) {
+        descElement.innerText = targetProject.description;
+        } else {
+        
+        refreshCardsDescriptionsOnly();
+        }
+        }
+        }
+
+        function refreshCardsDescriptionsOnly() {
+        
+        for (let i = 0; i < projectsData.length; i++) {
+        const descSpan = document.getElementById(`desc-${i}`);
+        if (descSpan) {
+        descSpan.innerText = projectsData[i].description;
+        }
+        }
+        }
+
+        function clearUpdates() {
+        feedMessages = [];
+        renderFeed();
+        }
+
+        if (postBtn) {
+        postBtn.addEventListener('click', () => {
+        if (userInput && userInput.value.trim() !== "") {
+        addUpdate(userInput.value);
+        userInput.value = '';
+        } else {
+        const tempMsg = " Please enter some text to update dynamic feed.";
+        feedMessages.unshift(`[${new Date().toLocaleTimeString()}] ${tempMsg}`);
+        if (feedMessages.length > 8) feedMessages.pop();
+        renderFeed();
+        }
+        });
+        }
+
+        if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+        clearUpdates();
+        });
+        }
+
+        if (userInput) {
+        userInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+        e.preventDefault();
+        if (userInput.value.trim()) {
+        addUpdate(userInput.value);
+        userInput.value = '';
+        }
+        }
+        });
+        }
+
+        console.log("Prototype chain demonstration:");
+        projectsData.forEach((proj, idx) => {
+        console.log(`Project ${proj.title} uses updateDescription?`, proj.updateDescription instanceof Function);
+        if (proj instanceof ExtendedProject) {
+        console.log(`  → ExtendedProject extra method: ${proj.getProjectLink()}`);
+        }
+        });
+
+
+        function reattachSliderEventsOnRefresh() {
+        attachSliderEvents();
+        }
+
+
+        renderAllProjects();
+        renderFeed();
+
+        PortfolioItem.prototype.showAlertMsg = function() {
+        return `[prototype] ${this.title} uses shared behavior!`;
+        };
+        console.log("PortfolioItem prototype extended with showAlertMsg: ", projectsData[0].showAlertMsg());
+
+        document.addEventListener('click', (e) => {
+        const card = e.target.closest('.card');
+        if (card && !e.target.closest('.slider-btn')) {
+        card.style.transition = '0.1s';
+        card.style.transform = 'scale(0.99)';
+        setTimeout(() => {
+        card.style.transform = '';
+        }, 150);
+        const cardTitleElem = card.querySelector('.card-title');
+        if (cardTitleElem && cardTitleElem.innerText) {
+        const title = cardTitleElem.innerText;
+
+        }
+        }
+        });
+    </script>
+</body>
+</html>

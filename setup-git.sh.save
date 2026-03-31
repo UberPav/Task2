@@ -1,0 +1,11 @@
+#!/bin/bash
+echo -e "\033[32mSetting up Git repository...\033[0m" git init cat > 
+.gitignore << EOF
+.DS_Store
+node_modules/
+*.log
+.env
+.vscode/
+.idea/
+EOF
+echo -e
