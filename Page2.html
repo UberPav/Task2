@@ -459,32 +459,32 @@
         });
         }
 
-       function sliderClickHandler(e){
-        e.stopPropagation();
-        const btn = e.currentTarget;
-        const projectId = parseInt(btn.getAttribute('data-id'));
-        const direction = btn.get.Attribute('data-dir');
-        if (isNaN(projectId)) return;
-        let currentIdx = currentSlides[projectId];
-        const totalImages = projectsData[projectId].imageArray.length;
-        if (direction === 'prev') {
-        currentIdx = (currentIdx - 1 + totalImages) % totalImages;
-        } else if (direction === 'next') {
-        currentIdx = (currentIdx + 1) % totalImages
-         }
-        currentSlides[projectId] = currentIdx;
-        const sliderContainer = document.querySelector(`.slider-container[data-project-id="${projectId}"]`);
-        if (sliderContainer) {
-        const images = sliderContainer.querySelectorAll('.slide-img');
-        images.forEach((img, i) => {
+       function sliderClickHandler(e) {
+    e.stopPropagation();
+    const btn = e.currentTarget;
+    const projectId = parseInt(btn.getAttribute('data-id'));
+    const direction = btn.getAttribute('data-dir');
+    if (isNaN(projectId)) return;
+    let currentIdx = currentSlides[projectId];
+    const totalImages = projectsData[projectId].imageArray.length;
+    if (direction === 'prev') {
+      currentIdx = (currentIdx - 1 + totalImages) % totalImages;
+    } else if (direction === 'next') {
+      currentIdx = (currentIdx + 1) % totalImages;
+    }
+    currentSlides[projectId] = currentIdx;
+    const sliderContainer = document.querySelector(`.slider-container[data-project-id="${projectId}"]`);
+    if (sliderContainer) {
+      const images = sliderContainer.querySelectorAll('.slide-img');
+      images.forEach((img, i) => {
         if (i === currentIdx) {
-        img.classList.add('active');
+          img.classList.add('active');
         } else {
-        img.classList.remove('active');
+          img.classList.remove('active');
         }
-        });
-        }
-        }
+      });
+    }
+  }
 
         const toggleBtn = document.getElementById('revealToggleBtn');
         const extraInsightDiv = document.getElementById('extraInsight');
